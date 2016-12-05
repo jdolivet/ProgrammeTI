@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0030)http://tiforge.info/ti_editor/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Bezout</title>
+		<link href="http://tiforge.info/ti_editor/style/icone.gif" rel="shortcut icon">
+			
+		<link rel="stylesheet" media="screen" type="text/css" title="Style" href="./BEZOUT_files/style.css">
+		<script type="text/javascript" src="./BEZOUT_files/script.js"></script>
+	<style type="text/css"></style></head>
+<body id="bodyeditor"><div id="divhaut"><span id="haut"><span id="titre">BEZOUT</span> <span class="separe">|</span> Recherche d'un couple (u;v) tel que au+bv=PGCD(a;b) <span class="separe">|<a  id="haut2" >TI83/83+/84+</a></div><form id="onglets" action="./DICHO_files/DICHO.htm" method="post"><p><input type="hidden" value="i522b17db5535e.8xp" name="fichier"></p><ul><li><input id="select" class="onglet"  title="Visualiser" value="Visualisation" name="do"></li></ul></form>﻿<div id="page"><div id="gauche"><div id="ligne">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21</div><pre id="code">:Prompt <span class="var">A</span>,<span class="var">B</span>
+:<span class="chiffre">1</span>→<span class="var">R</span>
+:<span class="chiffre">1</span>→<span class="var">U</span>
+:<span class="chiffre">0</span>→<span class="var">V</span>
+:<span class="chiffre">0</span>→<span class="var">X</span>
+:<span class="chiffre">1</span>→<span class="var">Y</span>
+:<span class="struct">While</span> <span class="var">R</span><span class="test">&gt;</span><span class="chiffre">0</span>
+:	int(<span class="var">A</span><span class="test">/</span><span class="var">B</span>)→<span class="var">Q</span>
+:	<span class="var">A</span><span class="test">-</span><span class="var">B</span><span class="test">*</span><span class="var">Q</span>→<span class="var">R</span>
+:	<span class="var">B</span>→<span class="var">A</span>
+:	<span class="var">R</span>→<span class="var">B</span>
+:	<span class="var">U</span><span class="test">-</span><span class="var">X</span><span class="test">*</span><span class="var">Q</span>→<span class="var">S</span>
+:	<span class="var">X</span>→<span class="var">U</span>
+:	<span class="var">S</span>→<span class="var">X</span>
+:	<span class="var">V</span><span class="test">-</span><span class="var">Y</span><span class="test">*</span><span class="var">Q</span>→<span class="var">T</span>
+:	<span class="var">Y</span>→<span class="var">V</span>
+:	<span class="var">T</span>→<span class="var">Y</span>
+:<span class="struct">End</span>
+:Disp <span class="texte">"PGCD<span class="test">=</span></span><span class="texte">"</span>,<span class="var">A</span>
+:Disp <span class="texte">"U<span class="test">=</span></span><span class="texte">"</span>,<span class="var">U</span>
+:Disp <span class="texte">"V<span class="test">=</span></span><span class="texte">"</span>,<span class="var">V</span></pre></div><div id="droite"><h1>Les Variables</h1><div class="toutpetitblock">0 label<br><div class="petitblock "></div></div><div class="toutpetitblock">0 goto<br><div class="petitblock "></div></div><div class="toutpetitblock">10 vars<br><div class="petitblock "><div class="fonce">A</div><div class="clair">B</div><div class="fonce">Q</div><div class="clair">R</div><div class="fonce">S</div><div class="clair">T</div><div class="fonce">U</div><div class="clair">V</div><div class="fonce">X</div><div class="clair">Y</div></div></div><div class="toutpetitblock">0 string<br><div class="petitblock "></div></div><div class="toutpetitblock">0 GDB<br><div class="petitblock "></div></div><div class="toutpetitblock">0 image<br><div class="petitblock "></div></div><div class="toutpetitblock">0 liste<br><div class="petitblock "></div></div><div class="toutpetitblock">0 matrice<br><div class="petitblock "></div></div><div class="toutpetitblock">0 fonction<br><div class="petitblock "></div></div><h1>Programmes appelés</h1><div class="toutpetitblock">0 programme<br><div class="petitblock blockprog"></div></div></div></div><div id="generation"></div>	
+</body></html>

@@ -1,0 +1,1 @@
+function insertFunction(f){var a=document.getElementById('edition');a.focus();if(window.ActiveXObject){var b=document.selection.createRange();b.text=f;b.select();}else{var c=a.value.substring(0,a.selectionStart);a.value=c+f+a.value.substring(a.selectionEnd);a.focus();a.setSelectionRange(c.length+f.length,c.length+f.length);}}

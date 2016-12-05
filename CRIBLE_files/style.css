@@ -1,0 +1,368 @@
+﻿*{
+margin:0;
+padding:0
+}
+body{
+font-family:calibri;
+line-height:19px
+}
+#bodyaccueil{
+background-color:#444;
+}
+td{
+vertical-align:top
+}
+h1{
+clear:both;
+font-size:150%;
+padding-bottom:.2em;
+padding-top:.5em
+}
+li{
+display:inline;
+list-style:none
+}
+a:hover{
+color:#527dc8
+}
+input{
+margin:0 3px
+}
+pre{
+padding-left:1px;
+font-family:"courrier new";
+font-size:14px;
+line-height:21px
+}
+optgroup option{
+padding-left:1em
+}
+option{
+padding-left:3px;
+padding-right:3px
+}
+sup,sub{
+font-size:65%
+}
+sub{
+position:relative;
+vertical-align:text-bottom
+}
+sup{
+position:relative;
+top:-3px;
+vertical-align:text-top
+}
+#accueil{
+background:#444 none repeat scroll 0 0;
+padding:1em
+}
+#edition{
+border:1px solid #E4E4E4;
+font-family:"courrier new";
+font-size:14px;
+height:100%;
+letter-spacing:1px;
+line-height:21px;
+overflow:auto;
+padding-left:4px;
+width:100%
+}
+#edition:hover,#edition:active,#edition:focus,#comment:hover,#comment:active,#comment:focus,#nom_prog:hover,#nom_prog:active,#nom_prog:focus{
+border-color:#A1D2E8
+}
+#deuxPoints{
+font-family:"courrier new";
+font-size:14px;
+left:1px;
+line-height:21px;
+position:absolute;
+top:1px
+}
+#onglets{
+padding-left:.7em;
+position:absolute;
+top:28px
+}
+#onglets li{
+margin-right:.3em
+}
+.onglet:hover{
+background-color:#F0F0F0;
+border:2px solid #e3e3e3
+}
+.onglet{
+background-color:silver;
+border:2px solid #FFF;
+color:gray;
+cursor:default;
+font-family:calibri;
+font-size:medium;
+line-height:19px;
+margin:0;
+padding:0 .5em
+}
+#select{
+background-color:#f0f0f0;
+border:2px solid #e3e3e3;
+color:#000;
+cursor:default;
+padding:0 .5em
+}
+#gauche{
+background-color:#FCFCFC;
+border:1px solid #E4E4E4;
+bottom:2.5em;
+left:2px;
+letter-spacing:1px;
+overflow:auto;
+padding:1px;
+position:absolute;
+right:370px;
+top:49px
+}
+#gaucheedition{
+bottom:2em;
+left:2px;
+position:absolute;
+right:6px;
+top:3em
+}
+#save8xp{
+bottom:2.5em;
+left:2px;
+position:absolute;
+right:370px;
+top:3em
+}
+#champs{
+background-color:#E4E4E4;
+border-left:1px solid #E4E4E4;
+border-right:1px solid #E4E4E4;
+border-top:1px solid #E4E4E4;
+height:3em;
+left:2px;
+position:absolute;
+right:0;
+top:0
+}
+.nom_prog{
+left:4px;
+position:absolute;
+top:3px
+}
+#nom_prog{
+border:1px solid #C4C4C4;
+width:6em
+}
+.comment{
+left:4px;
+position:absolute;
+top:23px
+}
+#comment{
+border:1px solid #C4C4C4;
+width:27em
+}
+.commentHide{
+left:29em;
+position:absolute;
+top:23px
+}
+.protect{
+left:9em;
+position:absolute;
+top:3px
+}
+.archivage{
+left:15em;
+position:absolute;
+top:3px
+}
+.compatibilite{
+left:25em;
+position:absolute;
+top:3px
+}
+#errorEdition{
+padding:0 .5em
+}
+#errorEdition li{
+display:block
+}
+.errorMessage{
+background:#FCC url(error.png) no-repeat .5em .2em;
+border:1px solid #FAA;
+margin:1em 1em 0 0;
+padding:0 1em 1em 2em
+}
+.okMessage{
+background:#CFC url(success.png) no-repeat .5em 1.2em;
+border:1px solid #AFA;
+margin:1em 1em 0 0;
+padding:1em 1em 1em 2em
+}
+#buttonsave{
+bottom:0;
+left:7em;
+position:absolute
+}
+#buttonvalid{
+bottom:0;
+left:1em;
+position:absolute
+}
+#buttonReset{
+bottom:0;
+left:25em;
+position:absolute
+}
+#ligne{
+background-color:#e4e4e4;
+color:gray;
+float:left;
+font-family:"courrier new";
+font-size:14px;
+line-height:21px;
+padding-right:18px;
+text-align:right;
+width:44px
+}
+#code{
+float:left;
+width:50%
+}
+#droite{
+bottom:2.5em;
+font-size:80%;
+overflow:auto;
+padding:1px;
+position:absolute;
+right:0;
+top:30px;
+width:350px
+}
+.petitblock{
+border:1px solid #E4E4E4;
+height:100px;
+overflow:auto;
+width:50px
+}
+.blockprog{
+width:100px
+}
+.toutpetitblock{
+float:left;
+padding-right:1em
+}
+.fonce{
+background-color:#f0f0f0
+}
+.petitblock div{
+padding:0 2px
+}
+.tieditor{
+color:silver
+}
+#haut{
+float:left;
+margin-left:1em
+}
+#haut2{
+color:silver;
+float:right;
+margin-right:1em
+}
+#divhaut{
+background:transparent url(degrade.png) repeat scroll 0 0;
+cursor:default;
+height:30px;
+position:absolute;
+top:0;
+width:100%
+}
+#titre{
+font-weight:700
+}
+#generation{
+background:transparent url(degrade2.png) repeat scroll bottom left;
+bottom:0;
+color:silver;
+cursor:default;
+height:38px;
+position:absolute;
+text-align:center;
+width:100%
+}
+.separe{
+color:#FFF
+}
+.texte,.texte .chiffre,.texte .test,.texte .var{
+color:gray
+}
+a.lbl:hover{
+color:#90ee90
+}
+.lbl{
+color:green
+}
+.appel{
+color:navy
+}
+.var{
+color:red
+}
+.chiffre{
+color:#ff8000
+}
+.struct{
+color:#0080ff
+}
+.test{
+color:#8000ff
+}
+#ban{
+display:block;
+margin:auto
+}
+#containban{
+background-color:#444;
+padding-top:1em
+}
+fieldset{
+border:1px solid #e0e0e0;
+margin:auto;
+padding:1em;
+text-align:center
+}
+legend{
+font-size:85%;
+padding:0 2px
+}
+.div_upload{
+background:#f0f0f0;
+border:1px solid #e0e0e0;
+margin:1em auto;
+padding:1em;
+width:33em
+}
+.button{
+padding-left:2px;
+padding-right:2px
+}
+#uploadFile{
+padding:3px
+}
+#addIndent{
+margin-top:.3em
+}
+.infos_{
+font-size:85%;
+margin:1em auto
+}
+a,a.lbl{
+text-decoration:none
+}
+#onglets li:hover .onglet,.petitblock .var,#haut2:hover{
+color:#000
+}

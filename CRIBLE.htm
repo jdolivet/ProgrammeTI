@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0030)http://tiforge.info/ti_editor/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Crible</title>
+		<link href="http://tiforge.info/ti_editor/style/icone.gif" rel="shortcut icon">
+			
+		<link rel="stylesheet" media="screen" type="text/css" title="Style" href="./CRIBLE_files/style.css">
+		<script type="text/javascript" src="./CRIBLE_files/script.js"></script>
+	<style type="text/css"></style></head>
+<body id="bodyeditor"><div id="divhaut"><span id="haut"><span id="titre">CRIBLE</span> <span class="separe">|</span> Crible Eratosthène <span class="separe">|<a  id="haut2" >TI83/83+/84+</a></div><form id="onglets" action="./DICHO_files/DICHO.htm" method="post"><p><input type="hidden" value="i522b17db5535e.8xp" name="fichier"></p><ul><li><input id="select" class="onglet"  title="Visualiser" value="Visualisation" name="do"></li></ul></form>﻿<div id="page"><div id="gauche"><div id="ligne">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19</div><pre id="code">:EffListe <span class="var">L<sub>1</sub></span>,<span class="var">L<sub>2</sub></span>
+:Prompt <span class="var">N</span>
+:suite(<span class="var">K</span>,<span class="var">K</span>,<span class="chiffre">2</span>,<span class="var">N</span>)→<span class="var">L<sub>1</sub></span>
+:<span class="chiffre">2</span>→<span class="var">I</span>
+:<span class="struct">While</span> <span class="var">I</span><span class="test">≤</span>partEnt(√(<span class="var">N</span>))
+:	<span class="struct">For</span>(<span class="var">J</span>,<span class="var">I</span>,partEnt(<span class="var">N</span><span class="test">/</span><span class="var">I</span>))
+:		<span class="chiffre">0</span>→<span class="var">L<sub>1</sub></span>(<span class="var">I</span><span class="test">*</span><span class="var">J</span><span class="test">-</span><span class="chiffre">1</span>)
+:	<span class="struct">End</span>
+:	<span class="var">I</span><span class="test">+</span><span class="chiffre">1</span>→<span class="var">I</span>
+:<span class="struct">End</span>
+:<span class="chiffre">1</span>→<span class="var">R</span>
+:<span class="struct">For</span>(<span class="var">P</span>,<span class="chiffre">1</span>,<span class="var">N</span><span class="test">-</span><span class="chiffre">1</span>)
+:	<span class="struct">If</span> <span class="var">L<sub>1</sub></span>(<span class="var">P</span>)<span class="test">≠</span><span class="chiffre">0</span>
+:	<span class="struct">Then</span>
+:		<span class="var">L<sub>1</sub></span>(<span class="var">P</span>)→<span class="var">L<sub>2</sub></span>(<span class="var">R</span>)
+:		<span class="var">R</span><span class="test">+</span><span class="chiffre">1</span>→<span class="var">R</span>
+:	<span class="struct">End</span>
+:<span class="struct">End</span>
+:Disp <span class="var">L<sub>2</sub></span></pre></div><div id="droite"><h1>Les Variables</h1><div class="toutpetitblock">0 label<br><div class="petitblock "></div></div><div class="toutpetitblock">0 goto<br><div class="petitblock "></div></div><div class="toutpetitblock">6 vars<br><div class="petitblock "><div class="fonce">I</div><div class="clair">J</div><div class="fonce">K</div><div class="clair">N</div><div class="fonce">P</div><div class="clair">R</div></div></div><div class="toutpetitblock">0 string<br><div class="petitblock "></div></div><div class="toutpetitblock">0 GDB<br><div class="petitblock "></div></div><div class="toutpetitblock">0 image<br><div class="petitblock "></div></div><div class="toutpetitblock">2 listes<br><div class="petitblock "><div class="clair">L<sub>1</sub></div><div class="clair">L<sub>2</sub></div></div></div><div class="toutpetitblock">0 matrice<br><div class="petitblock "></div></div><div class="toutpetitblock">0 fonction<br><div class="petitblock "></div></div><h1>Programmes appelés</h1><div class="toutpetitblock">0 programme<br><div class="petitblock blockprog"></div></div></div></div><div id="generation"></div>	
+</body></html>
