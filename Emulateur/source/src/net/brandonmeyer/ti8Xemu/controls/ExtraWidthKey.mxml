@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	TI8XEmu - A Flex/ActionScript 3 Texas Instruments graphing calculator emulator
+    Copyright (C) 2008  Brandon A. Meyer
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<mx:VBox 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="50"
+	verticalGap="-4"
+	clipContent="false"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off"
+	creationComplete="creationCompleteHandler(event);"
+	removedFromStage="removedFromStageHandler(event);"
+>
+	
+	<mx:Metadata>
+		// Styles
+		[Style(name="buttonFillColors", type="Array", inherit="no")]
+		[Style(name="buttonColor", type="uint", format="Color", inherit="no")]
+		
+		
+		// Events
+		[Event(name="buttonDown", type="net.brandonmeyer.ti8Xemu.events.KeyEvent")]
+		[Event(name="buttonUp", type="net.brandonmeyer.ti8Xemu.events.KeyEvent")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import net.brandonmeyer.ti8Xemu.events.KeyEvent;
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Properties
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  String displayed in the 'second' label.
+			 */
+			[Bindable]
+			public var secondText:String = "";
+			
+			/**
+			 *  String displayed in the 'alpha' label.
+			 */
+			[Bindable]
+			public var alphaText:String = "";
+			
+			/**
+			 *  String displayed in the button.
+			 */
+			[Bindable]
+			public var buttonText:String = "";
+			
+			/**
+			 *  Row value of the key.
+			 */
+			[Bindable]
+			public var row:int = 0;
+			
+			/**
+			 *  Column value of the key.
+			 */
+			[Bindable]
+			public var column:int = 0;
+			
+			/**
+			 *  Keyboard character that the control will listen for 
+			 *  KeyboardEvents pertaining to.
+			 */
+			[Bindable]
+			public var keyboardEquivalent:String;
+			
+			[Bindable]
+			public var extraPaddingWidth:Number = 0;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Variables
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  Indicates whether the Mouse.MOUSE_DOWN event has been fired 
+			 *  from the button.
+			 *  
+			 *  @private
+			 */
+			private var _mouseDown:Boolean = false;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Event handlers
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  @private
+			 */
+			private function creationCompleteHandler(event:Event):void
+			{
+				// By default we'll attempt to listen for keyboard events
+				// related to the label on our button.
+				if (!keyboardEquivalent)
+					keyboardEquivalent = buttonText;
+				
+				systemManager.addEventListener(KeyboardEvent.KEY_DOWN, 
+											   systemManager_keyDownHandler);
+				systemManager.addEventListener(KeyboardEvent.KEY_UP, 
+											   systemManager_keyUpHandler);
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function removedFromStageHandler(event:Event):void
+			{
+				systemManager.removeEventListener(KeyboardEvent.KEY_DOWN, 
+												  systemManager_keyDownHandler);
+				systemManager.removeEventListener(KeyboardEvent.KEY_UP, 
+												  systemManager_keyUpHandler);
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function button_downHandler(event:MouseEvent):void
+			{
+				_mouseDown = true;
+				
+				var ke:KeyEvent = new KeyEvent(KeyEvent.BUTTON_DOWN);
+				ke.row = this.row;
+				ke.column = this.column;
+				dispatchEvent(ke);
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function button_upHandler(event:MouseEvent):void
+			{
+				// Ignore if the user mouse'd up or out without mousing
+				// down first.
+				if (_mouseDown)
+				{
+					var ke:KeyEvent = new KeyEvent(KeyEvent.BUTTON_UP);
+					ke.row = this.row;
+					ke.column = this.column;
+					dispatchEvent(ke);
+				}
+				
+				_mouseDown = false;
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function systemManager_keyUpHandler(event:KeyboardEvent):void
+			{
+				if (keyboardEquivalent && 
+					String.fromCharCode(event.charCode) == keyboardEquivalent)
+				{
+					button_upHandler(null);
+				}
+				else if (keyboardEquivalent && 
+						String.fromCharCode(event.charCode) == "" &&
+						event.charCode == parseInt(keyboardEquivalent))
+				{
+					button_upHandler(null);
+				}
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function systemManager_keyDownHandler(event:KeyboardEvent):void
+			{
+				if (keyboardEquivalent && 
+					String.fromCharCode(event.charCode) == keyboardEquivalent)
+				{
+					button_downHandler(null);
+				}
+				else if (keyboardEquivalent && 
+						String.fromCharCode(event.charCode) == "" &&
+						event.charCode == parseInt(keyboardEquivalent))
+				{
+					button_downHandler(null);
+				}
+			}
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Methods
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  Returns the 'buttonFillColors' in the style. If none exist,
+			 *  it will create and return a default set of fill colors for the
+			 *  button.
+			 * 
+			 *  @private
+			 */
+			private function getButtonFillColors():Array
+			{
+				var fillColors:Array = getStyle("buttonFillColors");
+				
+				// Set default if none exists
+				if (!fillColors || fillColors.length != 4)
+					fillColors = [0x666666, 0x000000, 0x666666, 0x000000];
+				
+				return fillColors;
+			}
+			
+			/**
+			 *  Returns the 'buttonColor' in the style. If it does not exist,
+			 *  it will create and return a default color for the button.
+			 * 
+			 *  @private
+			 */
+			private function getButtonColor():uint
+			{
+				var buttonColor:uint = getStyle("buttonColor");
+				
+				// Set default if none exists
+				if (isNaN(buttonColor))
+					buttonColor = 0xFFFFFF;
+				
+				return buttonColor;
+			}
+			
+			/**
+			 *  @private
+			 */
+			override public function styleChanged(styleProp:String):void
+			{
+				super.styleChanged(styleProp);
+				
+				if (!btn)
+					return;
+				
+				btn.setStyle("fillColors", getButtonFillColors());
+				btn.setStyle("color", getButtonColor());
+				
+				alphaLabel.styleName = getStyle("alphaStyleName");
+				secondLabel.styleName = getStyle("secondStyleName");
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Canvas width="100%" clipContent="false">
+		<mx:Label
+			id="secondLabel"
+			left="0"
+			paddingLeft="{extraPaddingWidth}"
+			text="{secondText}"
+		/>
+		
+		<mx:Label
+			id="alphaLabel"
+			right="0"
+			paddingRight="{extraPaddingWidth}"
+			text="{alphaText}"
+			includeInLayout="false"
+		/>
+	</mx:Canvas>
+	
+	<mx:Button
+		id="btn"
+		width="100%"
+		label="{buttonText}"
+		fillColors="{getButtonFillColors()}"
+		color="{getButtonColor()}"
+		mouseDown="button_downHandler(event);"
+		mouseUp="button_upHandler(event);"
+		mouseOut="button_upHandler(event);"
+	/>
+	
+</mx:VBox>

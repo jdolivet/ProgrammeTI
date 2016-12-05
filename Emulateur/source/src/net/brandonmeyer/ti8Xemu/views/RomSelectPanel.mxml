@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	TI8XEmu - A Flex/ActionScript 3 Texas Instruments graphing calculator emulator
+    Copyright (C) 2008  Brandon A. Meyer
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<mx:Panel 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	width="220" height="150"
+	title="{resourceManager.getString('Strings', 'SELECT_ROM')}"
+	creationComplete="creationCompleteHandler(event);"
+	addedEffect="Fade"
+>
+	
+	<mx:Metadata>
+		[Event(name="close", type="flash.events.Event")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import net.brandonmeyer.ti8Xemu.utils.MachineUtil;
+			import net.brandonmeyer.ti8Xemu.machine.IMachine;
+			
+			import mx.events.DynamicEvent;
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Class methods
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  Creates an instance of <code>RomSelectPanel</code>, adds it to
+			 *  the stage and returns the newly created panel.
+			 * 
+			 *  @param parent Parent for the panel.
+			 *  @param machine The <code>IMachine</code> to select the ROM for.
+			 * 
+			 *  @return The panel.
+			 */
+			static public function show(parent:Sprite, 
+										machine:IMachine):RomSelectPanel
+			{
+				if (!parent)
+					parent = Application.application as Sprite;
+				
+				var panel:RomSelectPanel = new RomSelectPanel();
+				panel._machine = machine;
+				
+				PopUpManager.addPopUp(panel, parent, true);
+				PopUpManager.centerPopUp(panel);
+				
+				return panel;
+			}
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Variables
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  @private
+			 */
+			private var _machine:IMachine;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Event handlers
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  @private
+			 */
+			private function creationCompleteHandler(event:Event):void
+			{
+				romList.dataProvider = MachineUtil.getRoms(_machine);
+			}
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Methods
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  Close the panel.
+			 */
+			public function close():void
+			{
+				removePanel("cancel");
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function showUploadPanel():void
+			{
+				removePanel("upload");
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function select():void
+			{
+				removePanel("select", romList.selectedItem);
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function removePanel(action:String, data:* = null):void
+			{
+				var de:DynamicEvent = new DynamicEvent(Event.CLOSE);
+				de.action = action;
+				
+				if (data)
+					de.data = data;
+				
+				dispatchEvent(de);
+				
+				PopUpManager.removePopUp(this);
+			}
+			
+			
+			//--------------------------
+			//  Appearance methods
+			//--------------------------
+			
+			/**
+			 *  @private
+			 */
+			private function romList_labelFunction(item:Object):String
+			{
+				return "Version " + item.version;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:List
+		id="romList"
+		width="100%" height="100%"
+		labelFunction="romList_labelFunction"
+	/>
+	<mx:ControlBar>
+	
+		<mx:Button
+			id="uploadNewBtn"
+			label="{resourceManager.getString('Strings', 'UPLOAD_NEW')}"
+			click="showUploadPanel();"
+		/>
+		
+		<mx:Spacer width="100%"/>
+		
+		<mx:Button
+			id="cancelBtn"
+			label="{resourceManager.getString('Strings', 'CANCEL')}"
+			click="close();"
+		/>
+		
+		<mx:Button
+			id="okBtn"
+			label="{resourceManager.getString('Strings', 'OK')}"
+			click="select();"
+			enabled="{romList.selectedItem != null}"
+		/>
+		
+	</mx:ControlBar>
+	
+</mx:Panel>

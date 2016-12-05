@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	TI8XEmu - A Flex/ActionScript 3 Texas Instruments graphing calculator emulator
+    Copyright (C) 2008  Brandon A. Meyer
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:core="net.brandonmeyer.ti8Xemu.core.*"
+	xmlns:controls="net.brandonmeyer.ti8Xemu.controls.*"
+	xmlns:keypads="net.brandonmeyer.ti8Xemu.views.keypads.*"
+	layout="vertical"
+	horizontalAlign="center"
+	width="300" height="610" 
+	creationComplete="creationCompleteHandler(event);"
+ 	viewSourceURL="http://ti.bank.free.fr/index.php?mod=archives&amp;ac=voir&amp;id=1414"
+ >
+
+	<mx:Style source="/../assets/css/Globals.css"/>
+
+	<mx:Script>
+		<![CDATA[
+			import flash.utils.setTimeout;
+			
+			import mx.controls.Alert;
+			import mx.events.DynamicEvent;
+			import mx.resources.ResourceBundle;
+			
+			import net.brandonmeyer.ti8Xemu.machine.IMachine;
+			import net.brandonmeyer.ti8Xemu.machine.ti82.TI82;
+			import net.brandonmeyer.ti8Xemu.machine.ti83.TI83;
+			import net.brandonmeyer.ti8Xemu.machine.ti85.TI85;
+			import net.brandonmeyer.ti8Xemu.core.Calculator;
+			import net.brandonmeyer.ti8Xemu.views.AboutPanel;
+			import net.brandonmeyer.ti8Xemu.views.RomUploadPanel;
+			import net.brandonmeyer.ti8Xemu.views.RomSelectPanel;
+			import net.brandonmeyer.ti8Xemu.events.CalculatorEvent;
+			import net.brandonmeyer.ti8Xemu.vo.RomVO;
+			import net.brandonmeyer.ti8Xemu.utils.MachineUtil;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Variables
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  @private
+			 */
+			[Bindable]
+			private var _calc:Calculator = new Calculator();
+			
+			/**
+			 *  @private
+			 */
+			private var _runningLocally:Boolean = false;
+			
+			/**
+			 *  @private
+			 */
+			private var _uploadPanel:RomUploadPanel;
+			
+			/**
+			 *  @private
+			 */
+			private var _romSelectPanel:RomSelectPanel;
+			
+			/**
+			 *  @private
+			 */
+			[ResourceBundle("Strings")]
+			private var _strings:ResourceBundle;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Event handlers
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  @private
+			 */
+			private function creationCompleteHandler(event:Event):void
+			{
+				var lc:LocalConnection = new LocalConnection();
+				
+//				_runningLocally = (lc.domain == "localhost");
+				
+				lc = null;
+				
+				_calc.addEventListener(CalculatorEvent.INVALID_ROM, 
+									   calc_invalidRomHandler, 
+									   false, 
+									   0, 
+									   true);
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function calc_invalidRomHandler(event:CalculatorEvent):void
+			{
+				Alert.show(resourceManager.getString("Strings", "INVALID_ROM"), 
+						   resourceManager.getString("Strings", "INVALID_ROM_TITLE"));
+				
+				calcTypeCB.selectedIndex = -1;
+				calcTypeCB_changeHandler(null);
+			}
+
+			/**
+			 *  @private
+			 */
+			private function title_clickHandler(event:MouseEvent):void
+			{
+				AboutPanel.show(this);
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function calcTypeCB_changeHandler(event:Event):void
+			{
+				_calc.calcType = null;
+				
+				keypadVS.selectedChild = keypadPlaceholder;
+				
+				var machineClass:Class;
+				
+				switch (calcTypeCB.selectedLabel)
+				{
+					case "TI-82":
+						machineClass = TI82;
+						keypadVS.selectedChild = ti82Keypad;
+						break;
+					
+					case "TI-83":
+						machineClass = TI83;
+						keypadVS.selectedChild = ti83Keypad;
+						break;
+					
+					case "TI-85":
+						machineClass = TI85;
+						keypadVS.selectedChild = ti85Keypad;
+						break;
+
+					default:
+						_calc.reset();
+						return;
+				}
+				
+				_calc.calcType = machineClass;
+				
+				// Use a local ROM file defined in calcTypes.
+				if (_runningLocally)
+				{
+					// Use setTimeout() to allow time for keypad 
+					// transition to play
+					setTimeout(function():void{
+						_calc.rom = calcTypeCB.selectedItem.romSource;
+						_calc.reset();
+					}, 1500);
+				}
+				// Need an externally specified ROM. Prompt for it now.
+				else
+				{
+					// Attempt to load saved ROMs from SharedObject.
+					//MachineUtil.loadLocalRoms(_calc.getMachine());
+					
+					if (MachineUtil.getRoms(_calc.getMachine()).length > 0)
+					{
+						showRomSelectPanel(_calc.getMachine());
+					}
+					else
+					{
+						showRomUploadPanel();
+					}
+				}
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function romSelectPanel_closeHandler(event:DynamicEvent):void
+			{
+				switch (event.action)
+				{
+					// Upload a new ROM
+					case "upload":
+					{
+						showRomUploadPanel();
+						break;
+					}
+					
+					// Selected a previous ROM from the list
+					case "select":
+					{
+						_calc.rom = (event.data as RomVO).data;
+						break;
+					}
+					
+					// Cancel
+					default:
+					{
+						calcTypeCB.selectedIndex = -1;
+						_calc.calcType = null;
+						keypadVS.selectedChild = keypadPlaceholder;
+					}
+				}
+				
+				_romSelectPanel = null;
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function uploadPanel_closeHandler(event:DynamicEvent):void
+			{
+				// Load from a URL.
+				if (event.data)
+				{
+					_calc.rom = event.data;
+					_calc.reset();
+				}
+				// Action canceled. Show empty state.
+				else
+				{
+					calcTypeCB.selectedIndex = -1;
+					_calc.calcType = null;
+					keypadVS.selectedChild = keypadPlaceholder;
+				}
+				
+				_uploadPanel = null;
+			}
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Methods
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  Show the RomUploadPanel and add appropriate listeners.
+			 *  @private
+			 */
+			private function showRomUploadPanel():void
+			{
+				_uploadPanel = RomUploadPanel.show(this);
+				_uploadPanel.addEventListener(Event.CLOSE, 
+											  uploadPanel_closeHandler, 
+											  false, 
+											  0, 
+											  true);
+			}
+			
+			/**
+			 *  Show the RomSelectPanel and add appropriate listeners.
+			 *  @private
+			 */
+			private function showRomSelectPanel(machine:IMachine):void
+			{
+				_romSelectPanel = RomSelectPanel.show(this, machine);
+				_romSelectPanel.addEventListener(Event.CLOSE, 
+												 romSelectPanel_closeHandler, 
+												 false, 
+												 0, 
+												 true);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Array id="calcTypes">
+		<mx:Object label="TI-82" romSource="ti82.rom"/>
+		<mx:Object label="TI-83" romSource="ti83.rom"/>
+		<mx:Object label="TI-85" romSource="ti85.rom"/>
+	</mx:Array>
+	
+	<mx:HBox 
+		width="100%" 
+		verticalAlign="middle"
+	>
+		
+		<mx:Box 
+			mouseChildren="false"
+			buttonMode="true"
+			useHandCursor="true"
+			click="title_clickHandler(event);"
+		>
+		
+			<mx:Label 
+				text="{resourceManager.getString('Strings', 'APP_NAME')}" 
+				styleName="titleLabel"
+			>
+				<mx:filters>
+					<mx:DropShadowFilter angle="45" alpha="0.4"/>
+				</mx:filters>
+			</mx:Label>
+			
+		</mx:Box>
+		
+		<mx:Spacer width="100%"/>
+	
+		<mx:Label 
+			text="{resourceManager.getString('Strings', 'CALCULATOR')}:" 
+			styleName="whiteText"
+		/>
+		
+		<mx:ComboBox
+			id="calcTypeCB"
+			dataProvider="{calcTypes}"
+			change="calcTypeCB_changeHandler(event);"
+			selectedIndex="-1"
+		/>
+		
+	</mx:HBox>
+	
+	<mx:Box styleName="screenContainer">
+		
+		<!-- 
+			Screen width should be slightly greater than 
+			an even multiple of the largest LCD width.
+			Scaling of the screen uses whole integers
+			to avoid oddly sized pixels.
+		-->
+		<core:Screen
+			id="calcScreen"
+			width="258" height="140"
+			calculator="{_calc}"
+		>
+			<core:filters>
+				<mx:DropShadowFilter id="innerShadow" inner="true" alpha="0.3"/>
+			</core:filters>
+		</core:Screen>
+		
+	</mx:Box>
+	
+	<mx:ViewStack
+		id="keypadVS" 
+		width="100%" height="100%" 
+		horizontalCenter="0"
+	>
+		
+		<mx:VBox 
+			id="keypadPlaceholder"
+			width="100%" height="100%"
+			verticalAlign="middle"
+		>
+			
+			<mx:TextArea
+				width="100%" height="220"
+				alpha="0.3"
+				text="{resourceManager.getString('Strings', 'SELECT_CALCULATOR')}"
+				wordWrap="true"
+				selectable="false"
+				editable="false"
+				styleName="keypadPlaceholder"
+			/>
+			
+		</mx:VBox>
+		
+		<keypads:TI82Keypad
+			id="ti82Keypad"
+			width="100%" height="100%"
+			calc="{_calc}"
+			showEffect="Fade" hideEffect="Fade"
+		/>
+		
+		<keypads:TI83Keypad
+			id="ti83Keypad"
+			width="100%" height="100%"
+			calc="{_calc}"
+			showEffect="Fade" hideEffect="Fade"
+		/>
+	
+		<keypads:TI85Keypad
+			id="ti85Keypad"
+			width="100%" height="100%"
+			calc="{_calc}"
+			showEffect="Fade" hideEffect="Fade"
+		/>
+		
+	</mx:ViewStack>
+	
+</mx:Application>

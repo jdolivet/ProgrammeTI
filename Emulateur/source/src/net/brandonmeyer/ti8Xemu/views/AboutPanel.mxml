@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	TI8XEmu - A Flex/ActionScript 3 Texas Instruments graphing calculator emulator
+    Copyright (C) 2008  Brandon A. Meyer
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="vertical" 
+	width="250" height="300"
+	showCloseButton="true"
+	close="close();"
+	title="{resourceManager.getString('Strings', 'ABOUT_TITLE')}"
+	addedEffect="Fade" removedEffect="Fade"
+>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.core.Application;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Class methods
+			//
+			//------------------------------------------------------------------
+			
+			static public function show(parent:Sprite):void
+			{
+				if (!parent)
+					parent = Application.application as Sprite;
+				
+				var panel:AboutPanel = new AboutPanel();
+				
+				PopUpManager.addPopUp(panel, parent, true);
+				PopUpManager.centerPopUp(panel);
+			}
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Methods
+			//
+			//------------------------------------------------------------------
+			
+			public function close():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Image
+		id="appIcon"
+		source="@Embed(source='/../assets/images/icon.gif')"
+	/>
+	
+	<mx:Label 
+		text="{resourceManager.getString('Strings', 'APP_NAME')}" 
+		fontWeight="bold" 
+		fontSize="12" 
+		styleName="blackBoldText"
+	/>
+	
+	<mx:Label 
+		text="{resourceManager.getString('Strings', 'VERSION')} 1.0.3" 
+		styleName="blackText"
+	/>
+	
+	<mx:Spacer/>
+	
+	<mx:Text 
+		text="{resourceManager.getString('Strings', 'CREATED_BY')}: Brandon Meyer" 
+		styleName="blackText"
+	/>
+	
+	<mx:Text 
+		text="{resourceManager.getString('Strings', 'SPECIAL_THANKS')}: Alan Fischer" 
+		styleName="blackText"
+	/>
+	
+</mx:TitleWindow>

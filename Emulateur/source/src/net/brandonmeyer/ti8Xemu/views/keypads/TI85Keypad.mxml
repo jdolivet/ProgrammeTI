@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	TI8XEmu - A Flex/ActionScript 3 Texas Instruments graphing calculator emulator
+    Copyright (C) 2008  Brandon A. Meyer
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<mx:VBox 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:controls="net.brandonmeyer.ti8Xemu.controls.*"
+	width="400" height="300"
+	verticalGap="2"
+	horizontalAlign="center"
+	creationComplete="creationCompleteHandler(event);"
+>
+	
+	<mx:Metadata>
+		[Style(name="keyStyleName", type="String", inherit="no")]
+		[Style(name="secondKeyStyleName", type="String", inherit="no")]
+		[Style(name="alphaKeyStyleName", type="String", inherit="no")]
+		[Style(name="numericKeyStyleName", type="String", inherit="no")]
+		[Style(name="arrowKeyStyleName", type="String", inherit="no")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import net.brandonmeyer.ti8Xemu.core.Calculator;
+			import net.brandonmeyer.ti8Xemu.events.KeyEvent;
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Constants
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  Width in pixels of the buttons in the keypad.
+			 * 
+			 *  @private
+			 */
+			private const BUTTON_WIDTH:uint = 47;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Properties
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  <code>Calculator</code> to send the key events to.
+			 */
+			public var calc:Calculator;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Variables
+			//
+			//------------------------------------------------------------------
+			
+			[Bindable]
+			protected var keyStyleName:String;
+			
+			[Bindable]
+			protected var secondKeyStyleName:String;
+			
+			[Bindable]
+			protected var alphaKeyStyleName:String;
+			
+			[Bindable]
+			protected var numericKeyStyleName:String;
+			
+			[Bindable]
+			protected var arrowKeyStyleName:String;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Event handlers
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  @private
+			 */
+			private function creationCompleteHandler(event:Event):void
+			{
+				keyStyleName = getStyle("keyStyleName");
+				secondKeyStyleName = getStyle("secondKeyStyleName");
+				alphaKeyStyleName = getStyle("alphaKeyStyleName");
+				numericKeyStyleName = getStyle("numericKeyStyleName");
+				arrowKeyStyleName = getStyle("arrowKeyStyleName");
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function key_buttonDownHandler(event:KeyEvent):void
+			{
+				if (calc)
+					calc.keyDown(event.row, event.column);
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function key_buttonUpHandler(event:KeyEvent):void
+			{
+				if (calc)
+					calc.keyUp(event.row, event.column);
+			}
+			
+			/**
+			 *  @private
+			 */
+			override public function styleChanged(styleProp:String):void
+			{
+				super.styleChanged(styleProp);
+				
+				keyStyleName = getStyle("keyStyleName");
+				secondKeyStyleName = getStyle("secondKeyStyleName");
+				alphaKeyStyleName = getStyle("alphaKeyStyleName");
+				numericKeyStyleName = getStyle("numericKeyStyleName");
+				arrowKeyStyleName = getStyle("arrowKeyStyleName");
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:HBox width="100%" styleName="keyContainer">
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="F1"
+			secondText="M1"
+			row="6" column="4"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="F2"
+			secondText="M2"
+			row="6" column="3"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="F3"
+			secondText="M3"
+			row="6" column="2"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="F4"
+			secondText="M4"
+			row="6" column="1"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="F5"
+			secondText="M5"
+			row="6" column="0"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+	</mx:HBox>
+	
+	<mx:Spacer height="7"/>
+	
+	<mx:HBox width="100%" styleName="keyContainer">
+		<mx:VBox verticalGap="2">
+			<mx:HBox styleName="keyContainer">
+				<controls:Key
+					width="{BUTTON_WIDTH}"
+					buttonText="2nd"
+					row="6" column="5"
+					keyboardEquivalent="{String.fromCharCode(Keyboard.SHIFT)}"
+					buttonDown="key_buttonDownHandler(event);"
+					buttonUp="key_buttonUpHandler(event);"
+					styleName="{secondKeyStyleName}"
+				/>
+				
+				<controls:Key
+					width="{BUTTON_WIDTH}"
+					buttonText="EXIT"
+					secondText="QUIT"
+					row="6" column="6"
+					keyboardEquivalent="{String.fromCharCode(Keyboard.ESCAPE)}"
+					buttonDown="key_buttonDownHandler(event);"
+					buttonUp="key_buttonUpHandler(event);"
+					styleName="{keyStyleName}"
+				/>
+				
+				<controls:Key
+					width="{BUTTON_WIDTH}"
+					buttonText="MORE"
+					secondText="MODE"
+					row="6" column="7"
+					buttonDown="key_buttonDownHandler(event);"
+					buttonUp="key_buttonUpHandler(event);"
+					styleName="{keyStyleName}"
+				/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<controls:Key
+					width="{BUTTON_WIDTH}"
+					buttonText="ALPHA"
+					secondText="alpha"
+					row="5" column="7"
+					keyboardEquivalent="{String.fromCharCode(Keyboard.CONTROL)}"
+					buttonDown="key_buttonDownHandler(event);"
+					buttonUp="key_buttonUpHandler(event);"
+					styleName="{alphaKeyStyleName}"
+				/>
+				
+				<controls:Key
+					width="{BUTTON_WIDTH}"
+					buttonText="x-VAR"
+					secondText="LINK"
+					row="4" column="7"
+					buttonDown="key_buttonDownHandler(event);"
+					buttonUp="key_buttonUpHandler(event);"
+					styleName="{keyStyleName}"
+				/>
+				
+				<controls:Key
+					width="{BUTTON_WIDTH}"
+					buttonText="DEL"
+					secondText="INS"
+					row="3" column="7"
+					keyboardEquivalent="{String.fromCharCode(Keyboard.BACKSPACE)}"
+					buttonDown="key_buttonDownHandler(event);"
+					buttonUp="key_buttonUpHandler(event);"
+					styleName="{keyStyleName}"
+				/>
+			</mx:HBox>
+		</mx:VBox>
+		
+		<mx:Canvas width="100" height="80" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+			<mx:Button
+				top="0"
+				horizontalCenter="0" 
+				width="{BUTTON_WIDTH}"
+				label="^"
+				styleName="{arrowKeyStyleName}"
+				mouseDown="calc.keyDown(0, 3);"
+				mouseUp="calc.keyUp(0, 3);"
+			/>
+			
+			<mx:Button
+				bottom="0"
+				horizontalCenter="0" 
+				width="{BUTTON_WIDTH}"
+				label="v"
+				styleName="{arrowKeyStyleName}"
+				mouseDown="calc.keyDown(0, 0);"
+				mouseUp="calc.keyUp(0, 0);"
+			/>
+			
+			<mx:Button
+				left="0" verticalCenter="0"
+				width="23" height="{BUTTON_WIDTH}"
+				label="&lt;"
+				styleName="{arrowKeyStyleName}"
+				mouseDown="calc.keyDown(0, 1);"
+				mouseUp="calc.keyUp(0, 1);"
+			/>
+			
+			<mx:Button
+				right="0" verticalCenter="0"
+				width="23" height="{BUTTON_WIDTH}"
+				label=">"
+				styleName="{arrowKeyStyleName}"
+				mouseDown="calc.keyDown(0, 2);"
+				mouseUp="calc.keyUp(0, 2);"
+			/>
+		</mx:Canvas>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" styleName="keyContainer">
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="GRAPH"
+			secondText="SOLVER"
+			row="5" column="6"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="STAT"
+			secondText="SIMULT"
+			row="4" column="6"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="PRGM"
+			secondText="POLY"
+			row="3" column="6"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="CUSTM"
+			secondText="CATALG"
+			row="2" column="6"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="CLEAR"
+			secondText="TOLER"
+			row="1" column="6"
+			keyboardEquivalent="c"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" styleName="keyContainer">
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="LOG"
+			secondText="10^x"
+			alphaText="A"
+			row="5" column="5"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="SIN"
+			secondText="SIN-¹"
+			alphaText="B"
+			row="4" column="5"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="COS"
+			secondText="COS-¹"
+			alphaText="C"
+			row="3" column="5"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="TAN"
+			secondText="TAN-¹"
+			alphaText="D"
+			row="2" column="5"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="^"
+			secondText="∏"
+			alphaText="E"
+			row="1" column="5"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" styleName="keyContainer">
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="LN"
+			secondText="e^x"
+			alphaText="F"
+			row="5" column="4"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="EE"
+			secondText="X-¹"
+			alphaText="G"
+			row="4" column="4"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="("
+			secondText="["
+			alphaText="H"
+			row="3" column="4"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText=")"
+			secondText="]"
+			alphaText="I"
+			row="2" column="4"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="÷"
+			secondText="CALC"
+			alphaText="J"
+			row="1" column="4"
+			keyboardEquivalent="/"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" styleName="keyContainer">
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="x²"
+			secondText="√"
+			alphaText="K"
+			row="5" column="3"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="7"
+			secondText="MATRX"
+			alphaText="L"
+			row="4" column="3"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="8"
+			secondText="VECTR"
+			alphaText="M"
+			row="3" column="3"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="9"
+			secondText="CPLX"
+			alphaText="N"
+			row="2" column="3"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="x"
+			secondText="MATH"
+			alphaText="O"
+			row="1" column="3"
+			keyboardEquivalent="*"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" styleName="keyContainer">
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText=","
+			secondText="∠"
+			alphaText="P"
+			row="5" column="2"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="4"
+			secondText="CONS"
+			alphaText="Q"
+			row="4" column="2"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="5"
+			secondText="CONV"
+			alphaText="R"
+			row="3" column="2"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="6"
+			secondText="STRNG"
+			alphaText="S"
+			row="2" column="2"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="-"
+			secondText="LIST"
+			alphaText="T"
+			row="1" column="2"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" styleName="keyContainer">
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="STO"
+			secondText="RCL"
+			alphaText="="
+			row="5" column="1"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="1"
+			secondText="BASE"
+			alphaText="U"
+			row="4" column="1"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="2"
+			secondText="TEST"
+			alphaText="V"
+			row="3" column="1"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="3"
+			secondText="VARS"
+			alphaText="W"
+			row="2" column="1"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="+"
+			secondText="MEM"
+			alphaText="X"
+			row="1" column="1"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" styleName="keyContainer">
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="ON"
+			secondText="OFF"
+			keyboardEquivalent="\"
+			row="5" column="0"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="0"
+			secondText="CHAR"
+			alphaText="Y"
+			row="4" column="0"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="."
+			secondText=":"
+			alphaText="Z"
+			row="3" column="0"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="(-)"
+			secondText="ANS"
+			alphaText="˽"
+			row="2" column="0"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{numericKeyStyleName}"
+		/>
+		
+		<controls:Key
+			width="{BUTTON_WIDTH}"
+			buttonText="ENTER"
+			secondText="ENTRY"
+			keyboardEquivalent="{String.fromCharCode(13)}"
+			row="1" column="0"
+			buttonDown="key_buttonDownHandler(event);"
+			buttonUp="key_buttonUpHandler(event);"
+			styleName="{keyStyleName}"
+		/>
+	</mx:HBox>
+	
+</mx:VBox>

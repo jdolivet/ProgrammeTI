@@ -1,0 +1,446 @@
+/* CSS file */
+
+Application
+{
+	theme-color:		#333333;
+	
+	background-gradient-colors:	#555555, #222222;
+	background-color:	#222222;
+	
+	padding-top: 		5;
+	padding-bottom:		15;
+	padding-left:		8;
+	padding-right:		8;
+	
+	modal-transparency-color: #000000;
+	
+	font-family:		myVerdana;
+}
+
+Button
+{
+	corner-radius:		2;
+	font-size:			9;
+	padding-left:		-2;
+	padding-right:		-2;
+   	highlightAlphas: 	0.18, 0;
+   	fillAlphas: 		1, 0.60, 0.80, 0.5;
+   	fillColors: 		#666666, #000000, #666666, #000000;
+   	color: 				#ffffff;
+   	textRollOverColor: 	#ffffff;
+   	font-weight:		normal;
+   	font-family:		myVerdana;
+}
+
+ComboBox
+{
+   	color: 				#ffffff;
+   	corner-radius:		2;
+   	highlight-alphas: 	0, 0;
+   	alternatingItemColors: #eeeeee, #ffffff;
+   	dropDownStyleName: 	"myComboBoxDropDowns";
+   	font-family:		myVerdanaBold;
+}
+
+.myComboBoxDropDowns
+{
+   	color: 				#000000;
+   	font-weight:		normal;
+   	font-family:		myVerdana;
+}
+
+Panel
+{
+	border-alpha: 		1;
+    border-thickness-left: 0;
+    border-thickness-top: 0;
+    border-thickness-bottom: 0;
+    border-thickness-right: 0;
+    corner-radius: 		2;
+    background-alpha: 	1;
+    header-colors: 		#666666, #333333;
+    footer-colors: 		#666666, #333333;
+    title-style-name: 	"mypanelTitle";
+    horizontal-align:	center;
+    font-family:		myVerdana;
+}
+
+Alert
+{
+	border-alpha: 		1;
+    border-thickness-left: 0;
+    border-thickness-top: 0;
+    border-thickness-bottom: 10;
+    border-thickness-right: 0;
+    corner-radius: 		2;
+    background-alpha: 	1;
+    background-color:	#FFFFFF;
+    border-color:		#FFFFFF;
+    color:				#000000;
+    header-colors: 		#666666, #333333;
+    footer-colors: 		#666666, #333333;
+    title-style-name: 	"mypanelTitle";
+    horizontal-align:	center;
+    font-family:		myVerdana;
+    button-style-name:	null;
+}
+
+.mypanelTitle
+{
+    color: #ffffff;
+    font-family:		myVerdanaBold;
+    font-weight:		bold;
+}
+
+Screen
+{
+	background-color:	#eeeeee;
+	border-color:		#eeeeee;
+	border-thickness: 	1;
+	pixel-on-color:		#444444;
+}
+
+List
+{
+	color:				#000000;
+	font-family:		myVerdana;
+}
+
+
+
+/* Keypad styles ------------------------------------------------------------ */
+
+.keypadPlaceholder
+{
+	color:				#ffffff;
+	font-family:		Lucida;
+	font-size:			36;
+	border-style:		none;
+	background-alpha:	0;
+	text-align:center	center;
+}
+
+TI85Keypad
+{
+	key-style-name:			"ti85BlackKeypadKey";
+	numeric-key-style-name: "ti85GrayKeypadKey";
+	second-key-style-name: 	"ti85SecondKeypadKey";
+	alpha-key-style-name: 	"ti85AlphaKeypadKey";
+	arrow-key-style-name: 	"ti85KeypadArrowButton";
+}
+
+.ti85SecondLabel
+{
+	color:				#ffff70;
+	font-size:			9;
+	padding-left:		0;
+	font-family:		myVerdana;
+}
+
+.ti85AlphaLabel
+{
+	color:				#678dff;
+	font-size:			9;
+	padding-right:		0;
+	text-align:			right;
+	font-family:		myVerdana;
+}
+
+.ti85GrayKeypadKey
+{
+	button-fill-colors:	#AAAAAA, #555555, #AAAAAA, #555555;
+	button-color:		#FFFFFF;
+	alpha-style-name: 	"ti85AlphaLabel";
+	second-style-name:	"ti85SecondLabel";
+}
+
+.ti85BlackKeypadKey
+{
+	button-fill-colors:	#666666, #000000, #666666, #000000;
+	button-color:		#FFFFFF;
+	alpha-style-name: 	"ti85AlphaLabel";
+	second-style-name:	"ti85SecondLabel";
+}
+
+.ti85SecondKeypadKey
+{
+	button-fill-colors:	#ffff99, #ffff00, #ffff99, #ffff00;
+	button-color:		#000000;
+	alpha-style-name: 	"ti85AlphaLabel";
+	second-style-name:	"ti85SecondLabel";
+}
+
+.ti85AlphaKeypadKey
+{
+	button-fill-colors:	#678dff, #678dff, #678dff, #678dff;
+	button-color:		#000000;
+	alpha-style-name: 	"ti85AlphaLabel";
+	second-style-name:	"ti85SecondLabel";
+}
+
+.ti85KeypadArrowButton
+{
+	corner-radius:		2;
+	font-size:			9;
+	padding-left:		2;
+	padding-right:		2;
+   	highlight-alphas: 	0.18, 0;
+   	fill-alphas: 		1, 0.60, 0.80, 0.5;
+   	fill-colors: 		#cccccc, #999999, #cccccc, #999999;
+   	color: 				#ffffff;
+   	text-roll-over-color: #ffffff;
+   	font-family:		myVerdana;
+}
+
+
+TI82Keypad
+{
+	key-style-name:			"ti82BlackKeypadKey";
+	numeric-key-style-name: "ti82GrayKeypadKey";
+	second-key-style-name: 	"ti82SecondKeypadKey";
+	alpha-key-style-name: 	"ti82AlphaKeypadKey";
+	arrow-key-style-name: 	"ti82KeypadArrowButton";
+	blue-key-style-name:	"ti82BlueKeypadKey";
+}
+
+.ti82SecondLabel
+{
+	color:				#66cefb;
+	font-size:			9;
+	padding-left:		0;
+	font-family:		myVerdana;
+}
+
+.ti82AlphaLabel
+{
+	color:				#CCCCCC;
+	font-size:			9;
+	padding-right:		0;
+	text-align:			right;
+	font-family:		myVerdana;
+}
+
+.ti82GrayKeypadKey
+{
+	button-fill-colors:	#AAAAAA, #555555, #AAAAAA, #555555;
+	button-color:		#FFFFFF;
+	alpha-style-name: 	"ti82AlphaLabel";
+	second-style-name:	"ti82SecondLabel";
+}
+
+.ti82BlueKeypadKey
+{
+	button-fill-colors:	#3d4f96, #3d4f96, #3d4f96, #3d4f96;
+	button-color:		#FFFFFF;
+	alpha-style-name: 	"ti82AlphaLabel";
+	second-style-name:	"ti82SecondLabel";
+}
+
+.ti82BlackKeypadKey
+{
+	button-fill-colors:	#666666, #000000, #666666, #000000;
+	button-color:		#FFFFFF;
+	alpha-style-name: 	"ti82AlphaLabel";
+	second-style-name:	"ti82SecondLabel";
+}
+
+.ti82SecondKeypadKey
+{
+	button-fill-colors:	#66cefb, #66cefb, #66cefb, #66cefb;
+	button-color:		#000000;
+	alpha-style-name: 	"ti82AlphaLabel";
+	second-style-name:	"ti82SecondLabel";
+}
+
+.ti82AlphaKeypadKey
+{
+	button-fill-colors:	#AAAAAA, #555555, #AAAAAA, #555555;
+	button-color:		#000000;
+	alpha-style-name: 	"ti82AlphaLabel";
+	second-style-name:	"ti82SecondLabel";
+}
+
+.ti82KeypadArrowButton
+{
+	corner-radius:		2;
+	font-size:			9;
+	padding-left:		2;
+	padding-right:		2;
+   	highlight-alphas: 	0.18, 0;
+   	fill-alphas: 		1, 0.60, 0.80, 0.5;
+   	fill-colors: 		#3d4f96, #3d4f96, #3d4f96, #3d4f96;
+   	color: 				#ffffff;
+   	text-roll-over-color: #ffffff;
+   	font-family:		myVerdana;
+}
+
+
+TI83Keypad
+{
+	key-style-name:			"ti83BlackKeypadKey";
+	numeric-key-style-name: "ti83GrayKeypadKey";
+	second-key-style-name: 	"ti83SecondKeypadKey";
+	alpha-key-style-name: 	"ti83AlphaKeypadKey";
+	arrow-key-style-name: 	"ti83KeypadArrowButton";
+	blue-key-style-name:	"ti83BlueKeypadKey";
+}
+
+.ti83SecondLabel
+{
+	color:				#FFD609;
+	font-size:			9;
+	padding-left:		0;
+	font-family:		myVerdana;
+}
+
+.ti83AlphaLabel
+{
+	color:				#64c9b9;
+	font-size:			9;
+	padding-right:		0;
+	text-align:			right;
+	font-family:		myVerdana;
+}
+
+.ti83GrayKeypadKey
+{
+	button-fill-colors:	#AAAAAA, #555555, #AAAAAA, #555555;
+	button-color:		#FFFFFF;
+	alpha-style-name: 	"ti83AlphaLabel";
+	second-style-name:	"ti83SecondLabel";
+}
+
+.ti83BlueKeypadKey
+{
+	button-fill-colors:	#3d4f96, #3d4f96, #3d4f96, #3d4f96;
+	button-color:		#FFFFFF;
+	alpha-style-name: 	"ti83AlphaLabel";
+	second-style-name:	"ti83SecondLabel";
+}
+
+.ti83BlackKeypadKey
+{
+	button-fill-colors:	#666666, #000000, #666666, #000000;
+	button-color:		#FFFFFF;
+	alpha-style-name: 	"ti83AlphaLabel";
+	second-style-name:	"ti83SecondLabel";
+}
+
+.ti83SecondKeypadKey
+{
+	button-fill-colors:	#FFD609, #FFD609, #FFD609, #FFD609;
+	button-color:		#FFFFFF;
+	alpha-style-name: 	"ti83AlphaLabel";
+	second-style-name:	"ti83SecondLabel";
+}
+
+.ti83AlphaKeypadKey
+{
+	button-fill-colors:	#64c9b9, #64c9b9, #64c9b9, #64c9b9;
+	button-color:		#FFFFFF;
+	alpha-style-name: 	"ti83AlphaLabel";
+	second-style-name:	"ti83SecondLabel";
+}
+
+.ti83KeypadArrowButton
+{
+	corner-radius:		2;
+	font-size:			9;
+	padding-left:		2;
+	padding-right:		2;
+   	highlight-alphas: 	0.18, 0;
+   	fill-alphas: 		1, 0.60, 0.80, 0.5;
+   	fill-colors: 		#3d4f96, #3d4f96, #3d4f96, #3d4f96;
+   	color: 				#ffffff;
+   	text-roll-over-color: #ffffff;
+   	font-family:		myVerdana;
+}
+
+
+
+/* Containers --------------------------------------------------------------- */
+
+.keyContainer
+{
+	vertical-align:		bottom;
+	horizontal-align:	center;
+}
+
+.screenContainer
+{
+	corner-radius:		7;
+	border-style:		solid;
+	border-thickness:	1;
+	border-color:		#333333;
+	padding-top:		12;
+	padding-bottom:		12;
+	padding-left:		12;
+	padding-right:		12;
+	background-color:	#444444;
+}
+
+
+
+/* Misc controls ------------------------------------------------------------ */
+
+.titleLabel
+{
+	color:				#ffffff;
+	font-size:			14;
+	font-weight: 		bold;
+	font-family:		myVerdanaBold;
+}
+
+.blackText
+{
+	color:				#000000;
+	font-family:		myVerdana;
+}
+
+.blackBoldText
+{
+	color:				#000000;
+	font-family:		myVerdanaBold;
+	font-weight:		bold;
+}
+
+.whiteText
+{
+	color:				#ffffff;
+	font-family:		myVerdana;
+}
+
+
+
+/* Fonts -------------------------------------------------------------------- */
+
+@font-face
+{
+    src: url("/../assets/fonts/Lucida Sans.ttf") ;
+    fontFamily: Lucida;
+    unicodeRange:
+           U+0020-U+0040, /* Punctuation, Numbers */
+           U+0041-U+005A, /* Upper-Case A-Z */
+           U+005B-U+0060, /* Punctuation and Symbols */
+           U+0061-U+007A, /* Lower-Case a-z */
+           U+0040-U+0040, /* @@@@@*/
+           U+007B-U+007E, /* Punctuation and Symbols */
+           U+0093-U+0094, /* ¬î ¬ì*/
+           U+0040-U+0040; /* @@@@@*/
+}
+
+@font-face
+{
+    src: url("/../assets/fonts/Verdana.ttf") ;
+    fontFamily: myVerdana;
+    fontWeight: normal;
+           
+}
+
+@font-face
+{
+    src: url("/../assets/fonts/Verdana Bold.ttf") ;
+    fontFamily: myVerdanaBold;
+    fontWeight: bold;
+           
+}

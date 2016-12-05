@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	TI8XEmu - A Flex/ActionScript 3 Texas Instruments graphing calculator emulator
+    Copyright (C) 2008  Brandon A. Meyer
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<mx:Panel 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="vertical" 
+	width="290" height="130"
+	title="{resourceManager.getString('Strings', 'UPLOAD_ROM')}"
+	addedEffect="Fade" 
+>
+	
+	<mx:Metadata>
+		[Event(name="close", type="flash.events.Event")]
+	</mx:Metadata>
+
+	<mx:Script>
+		<![CDATA[
+			import mx.events.DynamicEvent;
+			import mx.managers.PopUpManager;
+			import mx.core.Application;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Class methods
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  Creates an instance of <code>RomUploadPanel</code>, adds it to
+			 *  the stage and returns the newly created panel.
+			 * 
+			 *  @param parent Parent for the panel.
+			 */
+			static public function show(parent:Sprite):RomUploadPanel
+			{
+				if (!parent)
+					parent = Application.application as Sprite;
+				
+				var panel:RomUploadPanel = new RomUploadPanel();
+				
+				PopUpManager.addPopUp(panel, parent, true);
+				PopUpManager.centerPopUp(panel);
+				
+				return panel;
+			}
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Variables
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  FileReference used for uploading local files.
+			 *  
+			 *  @private
+			 */
+			private var _fileRef:FileReference;
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Event handlers
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  @private
+			 */
+			private function fileRef_selectHandler(event:Event):void
+			{
+				romTI.editable = false;
+				romTI.text = _fileRef.name;
+			}
+			
+			
+			
+			//------------------------------------------------------------------
+			//
+			//  Methods
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 *  Close the panel.
+			 */
+			public function close():void
+			{
+				var de:DynamicEvent = new DynamicEvent(Event.CLOSE);
+				dispatchEvent(de);
+				
+				PopUpManager.removePopUp(this);
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function upload():void
+			{
+				var de:DynamicEvent = new DynamicEvent(Event.CLOSE);
+				
+				if (!_fileRef)
+					de.data = romTI.text;
+				else
+					de.data = _fileRef;
+				
+				dispatchEvent(de);
+				
+				PopUpManager.removePopUp(this);
+			}
+			
+			/**
+			 *  @private
+			 */
+			private function browseForFile():void
+			{
+				_fileRef = new FileReference();
+				_fileRef.addEventListener(Event.SELECT, fileRef_selectHandler, false, 0, true);
+				_fileRef.browse();
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Form 
+		id="uploadForm" 
+		width="100%"
+		paddingBottom="0"
+	>
+	
+		<mx:FormItem 
+			label="{resourceManager.getString('Strings', 'FILE')}:" 
+			width="100%" 
+			direction="horizontal"
+			styleName="blackText"
+		>
+		
+			<mx:TextInput id="romTI" width="100%"/>
+			
+			<mx:Button
+				id="browseButton"
+				label="{resourceManager.getString('Strings', 'BROWSE')}"
+				click="browseForFile();"
+			/>
+			
+		</mx:FormItem>
+		
+	</mx:Form>
+
+	<mx:ControlBar horizontalAlign="right">
+	
+		<mx:Button
+			id="cancelButton"
+			label="{resourceManager.getString('Strings', 'CANCEL')}"
+			click="close();"
+		/>
+		
+		<mx:Button
+			id="uploadButton"
+			label="{resourceManager.getString('Strings', 'UPLOAD')}"
+			click="upload();"
+		/>
+		
+	</mx:ControlBar>
+	
+</mx:Panel>
